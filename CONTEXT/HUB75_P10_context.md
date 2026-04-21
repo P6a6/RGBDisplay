@@ -255,6 +255,8 @@ upload_flags =
 
 **Frame receiver:** AsyncUDP on port 5005. Accepts exactly 12,288 bytes (64×64×3 RGB888, row-major, visual top-left first). Each packet is one complete frame rendered immediately via `setVisualPixel`.
 
+**Brightness control:** AsyncUDP on port 5006. Send a single byte (0–255). Calls `dma->setBrightness8()` directly — hardware PWM on OE pin (GPIO 15). Default on boot: 128 (50%). Server sends this whenever the brightness slider changes.
+
 ---
 
 ## Planned Architecture (next steps)

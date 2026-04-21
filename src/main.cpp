@@ -14,10 +14,12 @@
 #define PHYS_H       8
 #define FRAME_BYTES (LOG_W * LOG_H * 3)  // 12288 bytes, RGB888 row-major visual
 
-#define UDP_PORT    5005
+#define UDP_PORT       5005
+#define UDP_BRIGHT     5006
 
 MatrixPanel_I2S_DMA *dma = nullptr;
 AsyncUDP             udp;
+AsyncUDP             udpBright;
 
 // ── Remap ─────────────────────────────────────────────────────────────────────
 const int  CHAIN[4][2] = { {6,7}, {5,4}, {2,3}, {1,0} };
@@ -158,7 +160,7 @@ void setup() {
     mxconfig.clkphase=false;
     dma = new MatrixPanel_I2S_DMA(mxconfig);
     dma->begin();
-    dma->setBrightness8(80);
+    dma->setBrightness8(128);  // default 50% — server can override via UDP port 5006
     dma->clearScreen();
 
     showStatus("OTA TEST", "WIFI...", 0, 200, 255);
@@ -204,7 +206,16 @@ void setup() {
         udp.onPacket([](AsyncUDPPacket pkt) {
             renderFrame(pkt.data(), pkt.length());
         });
-        Serial.printf("UDP listening on port %d\n", UDP_PORT);
+        Serial.printf("UDP frame listener on port %d\n", UDP_PORT);
+    }
+
+    // ── UDP brightness control (single byte, 0–255) ───────────────────────────
+    if (udpBright.listen(UDP_BRIGHT)) {
+        udpBright.onPacket([](AsyncUDPPacket pkt) {
+            if (pkt.length() >= 1)
+                dma->setBrightness8(pkt.data()[0]);
+        });
+        Serial.printf("UDP brightness listener on port %d\n", UDP_BRIGHT);
     }
 }
 
