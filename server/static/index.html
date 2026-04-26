@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RGB Display</title>
+  <link rel="stylesheet" href="/static/style.css?v=11">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <div class="header">
+    <div id="dot" class="dot"></div>
+    <h1>RGB Display</h1>
+    <div class="brightness-row">
+      <span class="brightness-icon">☀</span>
+      <input type="range" id="brightness" min="0" max="255" value="128">
+      <span id="brightness-val" class="brightness-val">128</span>
+    </div>
+  </div>
+
+  <!-- ── Tabs ───────────────────────────────────────────────────────────── -->
+  <div class="tabs">
+    <div class="tab active" data-view="view-control">Control</div>
+  </div>
+
+  <!-- ── Control view ──────────────────────────────────────────────────── -->
+  <div id="view-control" class="view active">
+    <div class="power-bar">
+      <button id="power-btn" class="power-btn power-on">Display On</button>
+    </div>
+    <div id="modes-container"></div>
+    <div id="settings-panel" class="settings-panel" hidden>
+      <div id="settings-title" class="settings-title">Settings</div>
+      <div id="settings-content"></div>
+    </div>
+  </div>
+
+  <div id="ctrl-notice" class="ctrl-notice" hidden></div>
+
+</div>
+
+<!-- ── Full-screen game controller overlay ───────────────────────────────── -->
+<div id="game-overlay" class="game-overlay" hidden>
+
+  <!-- Header bar -->
+  <div class="go-header">
+    <div class="go-player-row">
+      <button class="go-player-btn go-p1 active" data-goplayer="0">P1</button>
+      <button class="go-player-btn go-p2"        data-goplayer="1">P2</button>
+    </div>
+    <span id="go-title" class="go-title">Game</span>
+    <div style="display:flex;gap:6px;flex-shrink:0">
+      <button id="go-gyro" class="go-gyro-btn">GYRO</button>
+      <button id="go-exit" class="go-exit">✕ Exit</button>
+    </div>
+  </div>
+
+  <!-- Controls (landscape: dpad left, menu centre, face right) -->
+  <div class="go-body">
+
+    <!-- D-pad -->
+    <div class="go-side go-left">
+      <div class="go-dpad">
+        <div></div><div class="go-dpad-btn" data-action="up">↑</div><div></div>
+        <div class="go-dpad-btn" data-action="left">←</div>
+        <div class="go-dpad-center"></div>
+        <div class="go-dpad-btn" data-action="right">→</div>
+        <div></div><div class="go-dpad-btn" data-action="down">↓</div><div></div>
+      </div>
+    </div>
+
+    <!-- Select / Start -->
+    <div class="go-mid">
+      <button class="go-menu-btn" data-action="select">SEL</button>
+      <button class="go-menu-btn" data-action="start">STA</button>
+    </div>
+
+    <!-- Face buttons -->
+    <div class="go-side go-right">
+      <div class="go-face">
+        <div></div><div class="go-face-btn btn-x" data-action="x">X</div><div></div>
+        <div class="go-face-btn btn-y" data-action="y">Y</div><div></div>
+        <div class="go-face-btn btn-a" data-action="a">A</div>
+        <div></div><div class="go-face-btn btn-b" data-action="b">B</div><div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/static/app.js?v=18"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+esp32:
+  ip: "192.168.0.63"
+  frame_port: 5005
+  brightness_port: 5006
+  state_port: 5007
+
+server:
+  host: "0.0.0.0"
+  port: 8080
+
+display:
+  fps: 30
+  default_brightness: 128
